@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tenali+Ramakrishna&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <style>
+        .mainPage {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        div {
+            margin: 1px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Sensor Observation Service(SOS)</h1>
+    </header>
+    <div class="mainPage">
+
+        <div id="left">
+
+            <div id="codesection">
+
+                <div id="get-numbers">
+
+                    <div class="form">
+                        <div>
+                            <label for="Server">Server</label>
+                            <select name="Server" id="cars">
+                                <option value="NDBC">NDBC</option>
+                                <option value="north">52North</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="param">Parameters</label>
+                            <!-- <input type="number" name="news_link" id="Parameters" min="0" value="2"> -->
+                            <select name="param" id="param" size="4">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="Stations">Stations</label>
+                            <!-- <input type="number" name="news_link" id="Stations" min="0" value="3"> -->
+                            <select name="Station" id="Stations" size="4">
+                                <option value="1"></option>
+                                <option value="2"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="check" id="check">
+                            <label for="check">All Stations</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="buttonNav">
+                    <div>
+                        <button onclick="spatialFilter()">Spatial Filter</button>
+                        <button onclick="temporialFilter()">Tamporial Filter</button>
+                        <button onclick="compareFilter()">Compare Filter</button>
+                    </div>
+                </div>
+                <div id="filter">
+                    <div>
+                        <label for="filterCB">Filter</label>
+                        <select name="filterCB" id="filterCB">
+                            <option value="none">None</option>
+                        </select>
+                        <button>Load</button>
+                        <div id="spatial-location" class="hidden">
+                            <label for="latitude">Latitude</label>
+                            <input type="text" name="latitude" id="latitude">
+                            <label for="longitude">Longitude</label>
+                            <input type="text" name="longitude" id="longitude">
+                        </div>
+
+                        <div id="spatial-bb" class="hidden">
+                            <label for="min-latitude">Min Latitude</label>
+                            <input type="text" name="min-latitude" id="min-latitude">
+                            <label for="min-longitude">Min Longitude</label>
+                            <input type="text" name="min-longitude" id="min-longitude">
+                            <br>
+                            <label for="max-latitude">Max Latitude</label>
+                            <input type="text" name="max-latitude" id="max-latitude">
+                            <label for="max-longitude">Max Longitude</label>
+                            <input type="text" name="max-longitude" id="max-longitude">
+                        </div>
+
+                        <div id="temporal-time" class="hidden">
+                            <label for="date">Date(YYYY-MM_DD)</label>
+                            <input type="text" name="date" id="date">
+                            <label for="f-time">Time(HH:MM:SS)</label>
+                            <input type="text" name="time" id="time">
+                        </div>
+
+                        <div id="temporial-during" class="hidden">
+                            <label for="f-date">From Date(YYYY-MM_DD)</label>
+                            <input type="text" name="f-date" id="f-date">
+                            <label for="f-time">From Time(HH:MM:SS)</label>
+                            <input type="text" name="f-time" id="f-time">
+                            <br>
+                            <label for="t-date">To Date(YYYY-MM_DD)</label>
+                            <input type="text" name="t-date" id="t-date">
+                            <label for="t-time">To Time(HH:MM:SS)</label>
+                            <input type="text" name="t-time" id="t-time">
+                        </div>
+
+                        <div id="compare" class="hidden">
+                            <label for="value">Value</label>
+                            <input type="number" name="value" id="value">
+                        </div>
+
+                    </div>
+                </div>
+                <button>Get Observation</button>
+
+                <div id="xmlResponse">
+
+                    <textarea name="textxml" id="textxml" cols="80" rows="10" disabled></textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="map">
+                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" alt="Image">
+            </div>
+            <div class="obsTable">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+<script>
+    function spatialFilter() {
+        var x = document.getElementById('filterCB');
+        var len = x.len;
+        var a=x.options;
+        console.log(a);
+        for (let index = 0; index < len; index++) {
+            var option = document.createElement('option');
+            option.text = a
+            x.remove(option);
+        }
+        // str="<option value='at-location'>At Location</option> <option value='bbox'>Bounding Box</option>";
+        // console.log(str);
+        var option1 = document.createElement("option");
+        option1.text = "At Location";
+        x.add(option1);
+        var option2 = document.createElement("option");
+        option2.text = "Bounding Box";
+        x.add(option2);
+    }
+</script>
+
+
+</html>
